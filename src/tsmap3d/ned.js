@@ -3,6 +3,8 @@
 import {ecef2enu, ecef2enuv, ecef2geodetic, enu2ecef} from './ecef';
 import {aer2enu, enu2aer, geodetic2enu} from './enu';
 
+export {aer2ned, ned2aer, ned2geodetic, ned2ecef, ecef2ned, geodetic2ned, ecef2nedv}
+
 function aer2ned(az, elev, slantRange, deg = true) {
     /*
     converts azimuth, elevation, range to target from observer to North, East, Down

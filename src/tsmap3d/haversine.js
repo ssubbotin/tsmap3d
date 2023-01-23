@@ -88,7 +88,7 @@ function anglesep(lon0, lat0, lon1, lat1, deg = true) {
         lon1 = radians(lon1);
         lat1 = radians(lat1);
     }
-    sep_rad = anglesep_meeus(lon0, lat0, lon1, lat1, false);
+    sep_rad = anglesep_meeus(lon0, lat0, lon1, lat1, {"deg": false});
     return (deg ? degrees(sep_rad) : sep_rad);
 }
 
