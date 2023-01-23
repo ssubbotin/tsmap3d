@@ -1,7 +1,7 @@
 /* Minimal class for planetary ellipsoids */
 
-import {assert} from "./utils";
 import {power, sqrt} from "./mathfun";
+import {assert} from "./funcutils";
 
 class Ellipsoid {
     /*

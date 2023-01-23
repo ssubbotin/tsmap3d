@@ -5,9 +5,10 @@ all assume radians
 */
 
 import {wgs84} from './ellipsoid';
-import {atan2, cos, hypot, pi, radians, sin} from './mathfun';
+import {abs, atan2, cos, hypot, pi, radians, sin} from './mathfun';
+import {assert} from "./funcutils";
 
-export {cart2pol, pol2cart, cart2sph, sph2cart, assert};
+export {cart2pol, pol2cart, cart2sph, sph2cart, sanitize};
 
 function cart2pol(x, y) {
     /* Transform Cartesian to polar coordinates */
@@ -40,20 +41,12 @@ function sph2cart(az, el, r) {
 }
 
 function sanitize(lat, ell, deg) {
-    if ((ell === null)) {
+    if (ell === null) {
         ell = wgs84;
     }
     if (deg) {
         lat = radians(lat);
     }
-    if ((abs(lat) > (pi / 2))) {
-        throw new Error("-pi/2 <= latitude <= pi/2");
-    }
+    assert(abs(lat) <= (pi / 2), "-pi/2 <= latitude <= pi/2");
     return [lat, ell];
-}
-
-function assert(condition, exception) {
-    if(!condition) {
-        throw new Error(exception)
-    }
 }
