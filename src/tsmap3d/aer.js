@@ -43,8 +43,8 @@ function ecef2aer(x, y, z, lat0, lon0, h0, ell = null, deg = true) {
     slant range [meters]
     */
     let xEast, yNorth, zUp;
-    [xEast, yNorth, zUp] = ecef2enu(x, y, z, lat0, lon0, h0, ell, {"deg": deg});
-    return enu2aer(xEast, yNorth, zUp, {"deg": deg});
+    [xEast, yNorth, zUp] = ecef2enu(x, y, z, lat0, lon0, h0, ell, deg);
+    return enu2aer(xEast, yNorth, zUp, deg);
 }
 
 function geodetic2aer(lat, lon, h, lat0, lon0, h0, ell = null, deg = true) {
@@ -82,8 +82,8 @@ function geodetic2aer(lat, lon, h, lat0, lon0, h0, ell = null, deg = true) {
     slant range [meters]
     */
     let e, n, u;
-    [e, n, u] = geodetic2enu(lat, lon, h, lat0, lon0, h0, ell, {"deg": deg});
-    return enu2aer(e, n, u, {"deg": deg});
+    [e, n, u] = geodetic2enu(lat, lon, h, lat0, lon0, h0, ell, deg);
+    return enu2aer(e, n, u, deg);
 }
 
 function aer2geodetic(az, el, srange, lat0, lon0, h0, ell = null, deg = true) {
@@ -123,11 +123,11 @@ function aer2geodetic(az, el, srange, lat0, lon0, h0, ell = null, deg = true) {
     altitude above ellipsoid  (meters)
     */
     let x, y, z;
-    [x, y, z] = aer2ecef(az, el, srange, lat0, lon0, h0, {"ell": ell, "deg": deg});
-    return ecef2geodetic(x, y, z, {"ell": ell, "deg": deg});
+    [x, y, z] = aer2ecef(az, el, srange, lat0, lon0, h0, ell, deg);
+    return ecef2geodetic(x, y, z, ell, deg);
 }
 
-function eci2aer(x, y, z, lat0, lon0, h0, t, {deg = true} = {}) {
+function eci2aer(x, y, z, lat0, lon0, h0, t, ell = null, deg = true) {
     /*
     takes Earth Centered Inertial x,y,z ECI coordinates of point and gives az, el, slant range from Observer
 
@@ -162,10 +162,10 @@ function eci2aer(x, y, z, lat0, lon0, h0, t, {deg = true} = {}) {
     */
     let xecef, yecef, zecef;
     [xecef, yecef, zecef] = eci2ecef(x, y, z, t);
-    return ecef2aer(xecef, yecef, zecef, lat0, lon0, h0, {"deg": deg});
+    return ecef2aer(xecef, yecef, zecef, lat0, lon0, h0, ell, deg);
 }
 
-function aer2eci(az, el, srange, lat0, lon0, h0, t, ell = null, {deg = true} = {}) {
+function aer2eci(az, el, srange, lat0, lon0, h0, t, ell = null, deg = true) {
     /*
     gives ECI of a point from an observer at az, el, slant range
 
@@ -203,7 +203,7 @@ function aer2eci(az, el, srange, lat0, lon0, h0, t, ell = null, {deg = true} = {
     ECEF z coordinate (meters)
     */
     let x, y, z;
-    [x, y, z] = aer2ecef(az, el, srange, lat0, lon0, h0, ell, {"deg": deg});
+    [x, y, z] = aer2ecef(az, el, srange, lat0, lon0, h0, ell, deg);
     return ecef2eci(x, y, z, t);
 }
 
@@ -248,8 +248,8 @@ function aer2ecef(az, el, srange, lat0, lon0, alt0, ell = null, deg = true) {
     if srange==NaN, z=NaN
     */
     let dx, dy, dz, e1, n1, u1, x0, y0, z0;
-    [x0, y0, z0] = geodetic2ecef(lat0, lon0, alt0, ell, {"deg": deg});
-    [e1, n1, u1] = aer2enu(az, el, srange, {"deg": deg});
-    [dx, dy, dz] = enu2uvw(e1, n1, u1, lat0, lon0, {"deg": deg});
+    [x0, y0, z0] = geodetic2ecef(lat0, lon0, alt0, ell, deg);
+    [e1, n1, u1] = aer2enu(az, el, srange, deg);
+    [dx, dy, dz] = enu2uvw(e1, n1, u1, lat0, lon0, deg);
     return [(x0 + dx), (y0 + dy), (z0 + dz)];
 }

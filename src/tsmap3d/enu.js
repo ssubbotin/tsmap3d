@@ -121,8 +121,8 @@ function enu2geodetic(e, n, u, lat0, lon0, h0, ell = null, deg = true) {
     altitude above ellipsoid  (meters)
     */
     let x, y, z;
-    [x, y, z] = enu2ecef(e, n, u, lat0, lon0, h0, ell, {"deg": deg});
-    return ecef2geodetic(x, y, z, ell, {"deg": deg});
+    [x, y, z] = enu2ecef(e, n, u, lat0, lon0, h0, ell, deg);
+    return ecef2geodetic(x, y, z, ell, deg);
 }
 
 function geodetic2enu(lat, lon, h, lat0, lon0, h0, ell = null, deg = true) {
@@ -157,7 +157,7 @@ function geodetic2enu(lat, lon, h, lat0, lon0, h0, ell = null, deg = true) {
     Up ENU
     */
     let x1, x2, y1, y2, z1, z2;
-    [x1, y1, z1] = geodetic2ecef(lat, lon, h, ell, {"deg": deg});
-    [x2, y2, z2] = geodetic2ecef(lat0, lon0, h0, ell, {"deg": deg});
-    return uvw2enu((x1 - x2), (y1 - y2), (z1 - z2), lat0, lon0, {"deg": deg});
+    [x1, y1, z1] = geodetic2ecef(lat, lon, h, ell, deg);
+    [x2, y2, z2] = geodetic2ecef(lat0, lon0, h0, ell, deg);
+    return uvw2enu((x1 - x2), (y1 - y2), (z1 - z2), lat0, lon0, deg);
 }

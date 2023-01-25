@@ -197,8 +197,8 @@ function ecef2enu(x, y, z, lat0, lon0, h0, ell = null, deg = true) {
 
     */
     let x0, y0, z0;
-    [x0, y0, z0] = geodetic2ecef(lat0, lon0, h0, ell, {"deg": deg});
-    return uvw2enu((x - x0), (y - y0), (z - z0), lat0, lon0, {"deg": deg});
+    [x0, y0, z0] = geodetic2ecef(lat0, lon0, h0, ell, deg);
+    return uvw2enu((x - x0), (y - y0), (z - z0), lat0, lon0, deg);
 }
 
 function enu2uvw(east, north, up, lat0, lon0, deg = true) {
@@ -264,7 +264,7 @@ function uvw2enu(u, v, w, lat0, lon0, deg = true) {
     return [East, North, Up];
 }
 
-function eci2geodetic(x, y, z, t, ell = null, {deg = true} = {}) {
+function eci2geodetic(x, y, z, t, ell = null, deg = true) {
     /*
     convert Earth Centered Internal ECI to geodetic coordinates
 
@@ -301,7 +301,7 @@ function eci2geodetic(x, y, z, t, ell = null, {deg = true} = {}) {
     return ecef2geodetic(xecef, yecef, zecef, ell, deg);
 }
 
-function geodetic2eci(lat, lon, alt, t, ell = null, {deg = true} = {}) {
+function geodetic2eci(lat, lon, alt, t, ell = null, deg = true) {
     /*
     convert geodetic coordinates to Earth Centered Internal ECI
 
@@ -373,7 +373,7 @@ function enu2ecef(e1, n1, u1, lat0, lon0, h0, ell = null, deg = true) {
     target z ECEF coordinate (meters)
     */
     let dx, dy, dz, x0, y0, z0;
-    [x0, y0, z0] = geodetic2ecef(lat0, lon0, h0, ell, {"deg": deg});
-    [dx, dy, dz] = enu2uvw(e1, n1, u1, lat0, lon0, {"deg": deg});
+    [x0, y0, z0] = geodetic2ecef(lat0, lon0, h0, ell, deg);
+    [dx, dy, dz] = enu2uvw(e1, n1, u1, lat0, lon0, deg);
     return [(x0 + dx), (y0 + dy), (z0 + dz)];
 }

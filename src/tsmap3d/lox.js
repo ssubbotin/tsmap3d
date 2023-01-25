@@ -56,8 +56,8 @@ function meridian_arc(lat1, lat2, ell = null, deg = true) {
     if (deg) {
         [lat1, lat2] = [radians(lat1), radians(lat2)];
     }
-    rlat1 = geodetic2rectifying(lat1, ell, {"deg": false});
-    rlat2 = geodetic2rectifying(lat2, ell, {"deg": false});
+    rlat1 = geodetic2rectifying(lat1, ell, false);
+    rlat2 = geodetic2rectifying(lat2, ell, false);
     return (rsphere.rectifying(ell) * abs((rlat2 - rlat1)));
 }
 
@@ -110,13 +110,13 @@ function loxodrome_inverse(lat1, lon1, lat2, lon2, ell = null, deg = true) {
     if (deg) {
         [lat1, lon1, lat2, lon2] = [radians(lat1), radians(lon1), radians(lat2), radians(lon2)];
     }
-    disolat = geodetic2isometric(lat2, ell, {"deg": false}) - geodetic2isometric(lat1, ell, {"deg": false});
+    disolat = geodetic2isometric(lat2, ell, false) - geodetic2isometric(lat1, ell, false);
     dlon = lon2 - lon1;
     az12 = atan2(dlon, disolat);
     aux = abs(cos(az12));
-    dist = meridian_arc(lat2, lat1, ell, {"deg": false}) / aux;
+    dist = meridian_arc(lat2, lat1, ell, false) / aux;
     if (aux < COS_EPS) {
-        dist = departure(lon2, lon1, lat1, ell, {"deg": false});
+        dist = departure(lon2, lon1, lat1, ell, false);
     }
     if (deg) {
         az12 = degrees(az12) % 360.0;
@@ -160,15 +160,16 @@ function loxodrome_direct(lat1, lon1, rng, a12, ell = null, deg = true) {
     a12 = a12 % tau;
     assert(abs(lat1) <= (pi / 2), "-90 <= latitude <= 90");
     assert(rng >= 0, "ground distance must be >= 0");
-    reclat = geodetic2rectifying(lat1, ell, {"deg": false});
+
+    reclat = geodetic2rectifying(lat1, ell, false);
     cosaz = cos(a12);
     lat2 = (reclat + ((rng / rsphere.rectifying(ell)) * cosaz));
-    lat2 = rectifying2geodetic(lat2, ell, {"deg": false});
-    newiso = geodetic2isometric(lat2, ell, {"deg": false});
-    iso = geodetic2isometric(lat1, ell, {"deg": false});
+    lat2 = rectifying2geodetic(lat2, ell, false);
+    newiso = geodetic2isometric(lat2, ell, false);
+    iso = geodetic2isometric(lat1, ell, false);
     dlon = (tan(a12) * (newiso - iso));
     if (abs(cos(a12)) < COS_EPS) {
-        dlon = ((sign((pi - a12)) * rng) / rcurve.parallel(lat1, ell, {"deg": false}));
+        dlon = ((sign((pi - a12)) * rng) / rcurve.parallel(lat1, ell, false));
     }
     lon2 = (lon1 + dlon);
     if (deg) {
@@ -202,7 +203,7 @@ function departure(lon1, lon2, lat, ell = null, deg = true) {
     if (deg) {
         [lon1, lon2, lat] = [radians(lon1), radians(lon2), radians(lat)];
     }
-    return (rcurve.parallel(lat, ell, {"deg": false}) * (abs((lon2 - lon1)) % pi));
+    return (rcurve.parallel(lat, ell, false) * (abs((lon2 - lon1)) % pi));
 }
 
 function meanm(lat, lon, ell = null, deg = true) {
@@ -231,10 +232,10 @@ function meanm(lat, lon, ell = null, deg = true) {
     if (deg) {
         [lat, lon] = [radians(lat), radians(lon)];
     }
-    lat = geodetic2authalic(lat, ell, {"deg": false});
-    [x, y, z] = sph2cart(lon, lat, array(1.0));
-    [lonbar, latbar, _] = cart2sph(x.sum(), y.sum(), z.sum());
-    latbar = authalic2geodetic(latbar, ell, {"deg": false});
+    lat = geodetic2authalic(lat, ell, false);
+    [x, y, z] = sph2cart(lon, lat, 1.0);
+    [lonbar, latbar, _] = cart2sph(x, y, z);
+    latbar = authalic2geodetic(latbar, ell, false);
     if (deg) {
         [latbar, lonbar] = [degrees(latbar), degrees(lonbar)];
     }

@@ -40,7 +40,7 @@ function parallel(lat, ell = null, deg = true) {
     radius of ellipsoid (meters)
     */
     [lat, ell] = sanitize(lat, ell, deg);
-    return (cos(lat) * transverse(lat, ell, {"deg": false}));
+    return (cos(lat) * transverse(lat, ell, false));
 }
 
 function meridian(lat, ell = null, deg = true) {
@@ -62,7 +62,7 @@ function meridian(lat, ell = null, deg = true) {
     radius: float
     radius of ellipsoid
     */
-    var f1, f2;
+    let f1, f2;
     [lat, ell] = sanitize(lat, ell, deg);
     f1 = (ell.semimajor_axis * (1 - power(ell.eccentricity, 2)));
     f2 = (1 - power((ell.eccentricity * sin(lat)), 2));

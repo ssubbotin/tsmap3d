@@ -31,7 +31,7 @@ function aer2ned(az, elev, slantRange, deg = true) {
     Down NED coordinate (meters)
     */
     let e, n, u;
-    [e, n, u] = aer2enu(az, elev, slantRange, {"deg": deg});
+    [e, n, u] = aer2enu(az, elev, slantRange, deg);
     return [n, e, (-u)];
 }
 
@@ -61,7 +61,7 @@ function ned2aer(n, e, d, deg = true) {
     slantRange : float
     slant range [meters]
     */
-    return enu2aer(e, n, (-d), {"deg": deg});
+    return enu2aer(e, n, (-d), deg);
 }
 
 function ned2geodetic(n, e, d, lat0, lon0, h0, ell = null, deg = true) {
@@ -100,8 +100,8 @@ function ned2geodetic(n, e, d, lat0, lon0, h0, ell = null, deg = true) {
 
     */
     let x, y, z;
-    [x, y, z] = enu2ecef(e, n, (-d), lat0, lon0, h0, ell, {"deg": deg});
-    return ecef2geodetic(x, y, z, ell, {"deg": deg});
+    [x, y, z] = enu2ecef(e, n, (-d), lat0, lon0, h0, ell, deg);
+    return ecef2geodetic(x, y, z, ell, deg);
 }
 
 function ned2ecef(n, e, d, lat0, lon0, h0, ell = null, deg = true) {
@@ -138,7 +138,7 @@ function ned2ecef(n, e, d, lat0, lon0, h0, ell = null, deg = true) {
     z : float
     ECEF z coordinate (meters)
     */
-    return enu2ecef(e, n, (-d), lat0, lon0, h0, ell, {"deg": deg});
+    return enu2ecef(e, n, (-d), lat0, lon0, h0, ell, deg);
 }
 
 function ecef2ned(x, y, z, lat0, lon0, h0, ell = null, deg = true) {
@@ -177,7 +177,7 @@ function ecef2ned(x, y, z, lat0, lon0, h0, ell = null, deg = true) {
 
     */
     let e, n, u;
-    [e, n, u] = ecef2enu(x, y, z, lat0, lon0, h0, ell, {"deg": deg});
+    [e, n, u] = ecef2enu(x, y, z, lat0, lon0, h0, ell, deg);
     return [n, e, (-u)];
 }
 
@@ -217,7 +217,7 @@ function geodetic2ned(lat, lon, h, lat0, lon0, h0, ell = null, deg = true) {
     Down NED coordinate (meters)
     */
     let e, n, u;
-    [e, n, u] = geodetic2enu(lat, lon, h, lat0, lon0, h0, ell, {"deg": deg});
+    [e, n, u] = geodetic2enu(lat, lon, h, lat0, lon0, h0, ell, deg);
     return [n, e, (-u)];
 }
 
@@ -253,6 +253,6 @@ function ecef2nedv(x, y, z, lat0, lon0, deg = true) {
     Down NED coordinate (meters)
     */
     let e, n, u;
-    [e, n, u] = ecef2enuv(x, y, z, lat0, lon0, {"deg": deg});
+    [e, n, u] = ecef2enuv(x, y, z, lat0, lon0, deg);
     return [n, e, (-u)];
 }

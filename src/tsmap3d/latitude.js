@@ -90,7 +90,7 @@ function geodetic2geocentric(geodetic_lat, alt_m, ell = null, deg = true) {
     */
     let geocentric_lat, r;
     [geodetic_lat, ell] = sanitize(geodetic_lat, ell, deg);
-    r = rcurve.transverse(geodetic_lat, ell, {"deg": false});
+    r = rcurve.transverse(geodetic_lat, ell, false);
     geocentric_lat = atan(((1 - (power(ell.eccentricity, 2) * (r / (r + alt_m)))) * tan(geodetic_lat)));
     return (deg ? degrees(geocentric_lat) : geocentric_lat);
 }
@@ -128,7 +128,7 @@ function geocentric2geodetic(geocentric_lat, alt_m, ell = null, deg = true) {
     */
     let geodetic_lat, r;
     [geocentric_lat, ell] = sanitize(geocentric_lat, ell, deg);
-    r = rcurve.transverse(geocentric_lat, ell, {"deg": false});
+    r = rcurve.transverse(geocentric_lat, ell, false);
     geodetic_lat = atan((tan(geocentric_lat) / (1 - (power(ell.eccentricity, 2) * (r / (r + alt_m))))));
     return (deg ? degrees(geodetic_lat) : geodetic_lat);
 }
@@ -207,7 +207,7 @@ function isometric2geodetic(isometric_lat, ell = null, deg = true) {
         isometric_lat = radians(isometric_lat);
     }
     conformal_lat = ((2 * atan(exp(isometric_lat))) - (pi / 2));
-    geodetic_lat = conformal2geodetic(conformal_lat, ell, {"deg": false});
+    geodetic_lat = conformal2geodetic(conformal_lat, ell, false);
     return (deg ? degrees(geodetic_lat) : geodetic_lat);
 }
 

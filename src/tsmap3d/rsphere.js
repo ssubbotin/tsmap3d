@@ -100,9 +100,9 @@ function euler(lat1, lon1, lat2, lon2, ell = null, deg = true) {
         [lat1, lon1, lat2, lon2] = [degrees(lat1), degrees(lon1), degrees(lat2), degrees(lon2)];
     }
     latmid = (lat1 + ((lat2 - lat1) / 2));
-    az = vdist(lat1, lon1, lat2, lon2, {"ell": ell})[1];
-    rho = rcurve.meridian(latmid, ell, {"deg": true});
-    nu = rcurve.transverse(latmid, ell, {"deg": true});
+    az = vdist(lat1, lon1, lat2, lon2, ell)[1];
+    rho = rcurve.meridian(latmid, ell, true);
+    nu = rcurve.transverse(latmid, ell, true);
     az = radians(az);
     den = ((rho * power(sin(az), 2)) + (nu * power(cos(az), 2)));
     return ((rho * nu) / den);
@@ -132,8 +132,8 @@ function curve(lat, ell = null, deg = true, method = "mean") {
     if (deg) {
         lat = radians(lat);
     }
-    rho = rcurve.meridian(lat, ell, {"deg": false});
-    nu = rcurve.transverse(lat, ell, {"deg": false});
+    rho = rcurve.meridian(lat, ell, false);
+    nu = rcurve.transverse(lat, ell, false);
     switch (method) {
         case "mean":
             return (rho + nu) / 2;

@@ -53,9 +53,9 @@ function lookAtSpheroid(lat0, lon0, h0, az, tilt, ell = null, deg = true) {
     b = ell.semimajor_axis;
     c = ell.semiminor_axis;
     el = (deg ? (tilt - 90.0) : (tilt - (pi / 2)));
-    [e, n, u] = aer2enu(az, el, {"srange": 1.0, "deg": deg});
-    [u, v, w] = enu2uvw(e, n, u, lat0, lon0, {"deg": deg});
-    [x, y, z] = geodetic2ecef(lat0, lon0, h0, {"deg": deg});
+    [e, n, u] = aer2enu(az, el, 1.0, deg);
+    [u, v, w] = enu2uvw(e, n, u, lat0, lon0, deg);
+    [x, y, z] = geodetic2ecef(lat0, lon0, h0, deg);
     value = ((((((-power(a, 2)) * power(b, 2)) * w) * z) - (((power(a, 2) * power(c, 2)) * v) * y)) - (((power(b, 2) * power(c, 2)) * u) * x));
     radical = (((((((((((((power(a, 2) * power(b, 2)) * power(w, 2)) + ((power(a, 2) * power(c, 2)) * power(v, 2))) - ((power(a, 2) * power(v, 2)) * power(z, 2))) + (((((2 * power(a, 2)) * v) * w) * y) * z)) - ((power(a, 2) * power(w, 2)) * power(y, 2))) + ((power(b, 2) * power(c, 2)) * power(u, 2))) - ((power(b, 2) * power(u, 2)) * power(z, 2))) + (((((2 * power(b, 2)) * u) * w) * x) * z)) - ((power(b, 2) * power(w, 2)) * power(x, 2))) - ((power(c, 2) * power(u, 2)) * power(y, 2))) + (((((2 * power(c, 2)) * u) * v) * x) * y)) - ((power(c, 2) * power(v, 2)) * power(x, 2)));
     magnitude = ((((power(a, 2) * power(b, 2)) * power(w, 2)) + ((power(a, 2) * power(c, 2)) * power(v, 2))) + ((power(b, 2) * power(c, 2)) * power(u, 2)));
@@ -66,6 +66,6 @@ function lookAtSpheroid(lat0, lon0, h0, az, tilt, ell = null, deg = true) {
     if (d < 0) {
         d = nan;
     }
-    [lat, lon, _] = ecef2geodetic((x + (d * u)), (y + (d * v)), (z + (d * w)), {"deg": deg});
+    [lat, lon, _] = ecef2geodetic((x + (d * u)), (y + (d * v)), (z + (d * w)), ell, deg);
     return [lat, lon, d];
 }

@@ -45,7 +45,7 @@ function anglesep_meeus(lon0, lat0, lon1, lat1, deg = true) {
 
     either the arrays must be the same size, or one of them must be a scalar
     */
-    var sep_rad;
+    let sep_rad;
     if (deg) {
         lon0 = radians(lon0);
         lat0 = radians(lat0);
@@ -81,14 +81,14 @@ function anglesep(lon0, lat0, lon1, lat1, deg = true) {
     For reference, this is from astropy astropy/coordinates/angle_utilities.py
     Angular separation between two points on a sphere.
     */
-    var sep_rad;
+    let sep_rad;
     if (deg) {
         lon0 = radians(lon0);
         lat0 = radians(lat0);
         lon1 = radians(lon1);
         lat1 = radians(lat1);
     }
-    sep_rad = anglesep_meeus(lon0, lat0, lon1, lat1, {"deg": false});
+    sep_rad = anglesep_meeus(lon0, lat0, lon1, lat1, false);
     return (deg ? degrees(sep_rad) : sep_rad);
 }
 

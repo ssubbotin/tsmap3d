@@ -96,7 +96,7 @@ function spherical2geodetic(lat, lon, radius, ell = null, deg = true) {
     geodetic coordinates. Journal of Geodesy. 76. 451-454.
     doi:10.1007/s00190-002-0273-6
     */
-    var D, Z, alt, coslat, glat, hypotDZ, k, p_0, q_0, r_0, s_0, sinlat, t_0, u_0, v_0, w_0;
+    let D, Z, alt, coslat, glat, hypotDZ, k, p_0, q_0, r_0, s_0, sinlat, t_0, u_0, v_0, w_0;
     [lat, ell] = sanitize(lat, ell, deg);
     if (deg) {
         lon = radians(lon);
