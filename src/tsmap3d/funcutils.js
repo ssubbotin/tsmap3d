@@ -1,4 +1,4 @@
-export {assert, notZero, ZeroDivisionError};
+export {assert, notZero, ZeroDivisionError, range};
 
 function assert(condition, message) {
     if(!condition) {
@@ -19,3 +19,5 @@ function notZero(n) {
     }
     return n;
 }
+
+const range = n => [...Array(n).keys()]

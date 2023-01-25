@@ -5,6 +5,7 @@ Michael Hirsch implementation of algorithms from D. Vallado
 */
 import {abs, asin, atan2, cos, degrees, radians, sin} from './mathfun';
 import {datetime2sidereal} from './sidereal';
+import {assert} from "./funcutils";
 
 export {azel2radec, radec2azel};
 
@@ -39,9 +40,8 @@ function azel2radec(az_deg, el_deg, lat_deg, lon_deg, time) {
     p.258-259
     */
     let az, dec, el, lat, lha, lon, lst;
-    if ((abs(lat_deg) > 90)) {
-        throw new Error("-90 <= lat <= 90");
-    }
+    assert(abs(lat_deg) <= 90, "-90 <= lat <= 90");
+
     az = radians(az_deg);
     el = radians(el_deg);
     lat = radians(lat_deg);
@@ -84,9 +84,8 @@ function radec2azel(ra_deg, dec_deg, lat_deg, lon_deg, time) {
     4th Edition Ch. 4.4 pg. 266-268
     */
     let az, dec, el, lat, lha, lon, lst, ra;
-    if ((abs(lat_deg) > 90)) {
-        throw new Error("-90 <= lat <= 90");
-    }
+    assert(abs(lat_deg) <= 90, "-90 <= lat <= 90");
+
     ra = radians(ra_deg);
     dec = radians(dec_deg);
     lat = radians(lat_deg);
